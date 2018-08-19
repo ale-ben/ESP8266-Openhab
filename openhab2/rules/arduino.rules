@@ -1,0 +1,48 @@
+rule "arduino" 
+when
+	Item arduino received update
+then
+	logInfo("INFO","Serial input splitted")
+	var serialIn = arduino.state.toString.trim
+	var buffer = serialIn.split(";")
+	var bufferLength = buffer.length
+	var i = -1
+	while ((i=i+1) < (buffer.length)){
+		var buffer1 = buffer.get(i).split(":")
+		logDebug("SensorName",buffer1.get(0))
+		logDebug("SensorValue",buffer1.get(1))
+		if (buffer1.get(0) == "Temperature"){
+			if (buffer1.get(1) == "165.98"){
+				logWarn("SENSOR", "Temperature sensor not working!")
+			} else {
+				postUpdate(temperature, buffer1.get(1))
+				postUpdate(lastUpdateTemp, new DateTimeType())
+				}
+		}
+		if (buffer1.get(0) == "Humidity"){
+			if (buffer1.get(1) == "165.98") {
+			logWarn("SENSOR","Humidity sensor not working!")
+			} else {
+				postUpdate(humidity, buffer1.get(1))
+				postUpdate(lastUpdateHum, new DateTimeType())
+				}
+		}
+		if (buffer1.get(0) == "Pressure"){
+			if (buffer1.get(1) == "165.98"){
+			logWarn("SENSOR","Pressure sensor not working!")
+			} else {
+				postUpdate(pressure, buffer1.get(1))
+				postUpdate(lastUpdatePress, new DateTimeType())
+				}
+		}
+		if (buffer1.get(0) == "LightLevel"){
+			if (buffer1.get(1) == "165.98"){
+			logWarn("SENSOR", "Light sensor not working!")
+			} else {
+				postUpdate(lightSensor, buffer1.get(1))
+				postUpdate(lastUpdateLight, new DateTimeType())
+				}
+		}
+	}
+end
+

@@ -1,0 +1,93 @@
+import java.text.SimpleDateFormat
+
+rule "Update Temperature Min and Max values"
+when
+        Item  temperature received update
+then
+
+	var SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY - HH:mm")
+
+	if (temperature.state instanceof DecimalType) {
+		postUpdate(maxDayTemperature, temperature.maximumSince(now.toDateMidnight, "rrd4j").state)
+		postUpdate(lastMaxDayTemperature, df.format(temperature.maximumSince(now.toDateMidnight, "rrd4j").timestamp))
+		postUpdate(minDayTemperature, temperature.minimumSince(now.toDateMidnight, "rrd4j").state)
+		postUpdate(lastMinDayTemperature, df.format(temperature.minimumSince(now.toDateMidnight, "rrd4j").timestamp))
+
+		postUpdate(maxWeekTemperature, temperature.maximumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").state)
+		postUpdate(lastMaxWeekTemperature, df.format(temperature.maximumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").timestamp))
+		postUpdate(minWeekTemperature, temperature.minimumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").state)
+		postUpdate(lastMinWeekTemperature, df.format(temperature.minimumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").timestamp))
+
+		postUpdate(maxMonthTemperature, temperature.maximumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").state)
+		postUpdate(lastMaxMonthTemperature, df.format(temperature.maximumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").timestamp))
+		postUpdate(minMonthTemperature, temperature.minimumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").state)
+		postUpdate(lastMinMonthTemperature, df.format(temperature.minimumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").timestamp))
+
+		postUpdate(maxOverallTemperature, temperature.maximumSince(parse("2017-01-01"), "rrd4j").state)
+		postUpdate(lastMaxOverallTemperature, df.format(temperature.maximumSince(parse("2017-01-01"), "rrd4j").timestamp))
+		postUpdate(minOverallTemperature, temperature.minimumSince(parse("2017-01-01"), "rrd4j").state)
+		postUpdate(lastMinOverallTemperature, df.format(temperature.minimumSince(parse("2017-01-01"), "rrd4j").timestamp))
+	}
+end
+
+
+rule "Update Pressure Min and Max values"
+when
+        Item  pressure received update
+then
+
+	var SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY - HH:mm")
+
+	if (pressure.state instanceof DecimalType) {
+		postUpdate(maxDayPressure, pressure.maximumSince(now.toDateMidnight, "rrd4j").state)
+		postUpdate(lastMaxDayPressure, df.format(pressure.maximumSince(now.toDateMidnight, "rrd4j").timestamp))
+		postUpdate(minDayPressure, pressure.minimumSince(now.toDateMidnight, "rrd4j").state)
+		postUpdate(lastMinDayPressure, df.format(pressure.minimumSince(now.toDateMidnight, "rrd4j").timestamp))
+
+		postUpdate(maxWeekPressure, pressure.maximumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").state)
+		postUpdate(lastMaxWeekPressure, df.format(pressure.maximumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").timestamp))
+		postUpdate(minWeekPressure, pressure.minimumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").state)
+		postUpdate(lastMinWeekPressure, df.format(pressure.minimumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").timestamp))
+
+		postUpdate(maxMonthPressure, pressure.maximumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").state)
+		postUpdate(lastMaxMonthPressure, df.format(pressure.maximumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").timestamp))
+		postUpdate(minMonthPressure, pressure.minimumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").state)
+		postUpdate(lastMinMonthPressure, df.format(pressure.minimumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").timestamp))
+
+		postUpdate(maxOverallPressure, pressure.maximumSince(parse("2017-01-01"), "rrd4j").state)
+		postUpdate(lastMaxOverallPressure, df.format(pressure.maximumSince(parse("2017-01-01"), "rrd4j").timestamp))
+		postUpdate(minOverallPressure, pressure.minimumSince(parse("2017-01-01"), "rrd4j").state)
+		postUpdate(lastMinOverallPressure, df.format(pressure.minimumSince(parse("2017-01-01"), "rrd4j").timestamp))
+	}
+end
+
+
+rule "Update Humidity Min and Max values"
+when
+        Item  humidity received update
+then
+
+	var SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY - HH:mm")
+
+	if (humidity.state instanceof DecimalType) {
+		postUpdate(maxDayHumidity, humidity.maximumSince(now.toDateMidnight, "rrd4j").state)
+		postUpdate(lastMaxDayHumidity, df.format(humidity.maximumSince(now.toDateMidnight, "rrd4j").timestamp))
+		postUpdate(minDayHumidity, humidity.minimumSince(now.toDateMidnight, "rrd4j").state)
+		postUpdate(lastMinDayHumidity, df.format(humidity.minimumSince(now.toDateMidnight, "rrd4j").timestamp))
+
+		postUpdate(maxWeekHumidity, humidity.maximumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").state)
+		postUpdate(lastMaxWeekHumidity, df.format(humidity.maximumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").timestamp))
+		postUpdate(minWeekHumidity, humidity.minimumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").state)
+		postUpdate(lastMinWeekHumidity, df.format(humidity.minimumSince(now.toDateMidnight.withDayOfWeek(1), "rrd4j").timestamp))
+
+		postUpdate(maxMonthHumidity, humidity.maximumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").state)
+		postUpdate(lastMaxMonthHumidity, df.format(humidity.maximumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").timestamp))
+		postUpdate(minMonthHumidity, humidity.minimumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").state)
+		postUpdate(lastMinMonthHumidity, df.format(humidity.minimumSince(now.toDateMidnight.withDayOfMonth(1), "rrd4j").timestamp))
+
+		postUpdate(maxOverallHumidity, humidity.maximumSince(parse("2017-01-01"), "rrd4j").state)
+		postUpdate(lastMaxOverallHumidity, df.format(humidity.maximumSince(parse("2017-01-01"), "rrd4j").timestamp))
+		postUpdate(minOverallHumidity, humidity.minimumSince(parse("2017-01-01"), "rrd4j").state)
+		postUpdate(lastMinOverallHumidity, df.format(humidity.minimumSince(parse("2017-01-01"), "rrd4j").timestamp))
+	}
+end

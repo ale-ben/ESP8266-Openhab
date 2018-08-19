@@ -1,0 +1,28 @@
+rule "Refresh Rate Temperature"
+when
+        Item refreshTemp changed
+then
+        sendCommand(arduino, "temperatureRefresh:" + refreshTemp.state.toString + "000;")
+end
+
+rule "Refresh Rate Pressure"
+when
+        Item refreshPress changed
+then
+        sendCommand(arduino, "pressureRefresh:" + refreshPress.state.toString + "000;")
+end
+
+rule "Refresh Rate Humidity"
+when
+        Item refreshHum changed
+then
+        sendCommand(arduino, "humidityRefresh:" + refreshHum.state.toString + "000;")
+end
+
+rule "Refresh Rate Light Level"
+when
+        Item refreshLigLev changed
+then
+        sendCommand(arduino, "lightLevelRefresh:" + refreshLigLev.state.toString + "000;")
+end
+

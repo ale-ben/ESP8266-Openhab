@@ -1,0 +1,13 @@
+Strategies{
+	everyDay    : "0 0 0 * * ?"
+	everyHour   : "0 0 * * * ?"
+	everyMinute : "0 * * * * ?"
+
+	default everyChange
+}
+
+Items {
+	Sensors* : strategy = everyMinute, everyChange, restoreOnStartup
+	Refresh* : strategy = everyChange, restoreOnStartup
+}
+

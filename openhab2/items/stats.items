@@ -1,0 +1,63 @@
+Group Temp
+Group Hum
+Group Press
+Group LightS
+
+Number chartPeriod 
+
+
+Number maxDayTemperature "Maximum Temperature [%.1f °C]" <temperature_hot>
+Number minDayTemperature "Minimum Temperature [%.1f °C]" <temperature_cold>
+Number maxWeekTemperature "Maximum Temperature [%.1f °C]" <temperature_hot>
+Number minWeekTemperature "Minimum Temperature [%.1f °C]" <temperature_cold>
+Number maxMonthTemperature "Maximum Temperature [%.1f °C]" <temperature_hot>
+Number minMonthTemperature "Minimum Temperature [%.1f °C]" <temperature_cold>
+Number maxOverallTemperature "Maximum Temperature [%.1f °C]" <temperature_hot>
+Number minOverallTemperature "Minimum Temperature [%.1f °C]" <temperature_cold>
+
+String lastMaxDayTemperature "Max Temperature at: [%s] " <clock>
+String lastMinDayTemperature "Min Temperature at: [%s] " <clock>
+String lastMaxWeekTemperature "Max Temperature at: [%s] " <clock>
+String lastMinWeekTemperature "Min Temperature at: [%s] " <clock>
+String lastMaxMonthTemperature "Max Temperature at: [%s] " <clock>
+String lastMinMonthTemperature "Min Temperature at: [%s] " <clock>
+String lastMaxOverallTemperature "Max Temperature at: [%s] " <clock>
+String lastMinOverallTemperature "Min Temperature at: [%s] " <clock>
+
+
+Number maxDayHumidity "Maximim Humidity [%.1f %%]" <humidity>
+Number minDayHumidity "Minimum Humidity [%.1f %%]" <humidity>
+Number maxWeekHumidity "Maximim Humidity [%.1f %%]" <humidity>
+Number minWeekHumidity "Minimum Humidity [%.1f %%]" <humidity>
+Number maxMonthHumidity "Maximim Humidity [%.1f %%]" <humidity>
+Number minMonthHumidity "Minimum Humidity [%.1f %%]" <humidity>
+Number maxOverallHumidity "Maximim Humidity [%.1f %%]" <humidity>
+Number minOverallHumidity "Minimum Humidity [%.1f %%]" <humidity>
+
+String lastMaxDayHumidity "Max Humidity at: [%s] " <clock>
+String lastMinDayHumidity "Min Humidity at: [%s] " <clock>
+String lastMaxWeekHumidity "Max Humidity at: [%s] " <clock>
+String lastMinWeekHumidity "Min Humidity at: [%s] " <clock>
+String lastMaxMonthHumidity "Max Humidity at: [%s] " <clock>
+String lastMinMonthHumidity "Min Humidity at: [%s] " <clock>
+String lastMaxOverallHumidity "Max Humidity at: [%s] " <clock>
+String lastMinOverallHumidity "Min Humidity at: [%s] " <clock>
+
+
+Number maxDayPressure "Max Pressure [%.1f hPa]" <pressure> (Press)
+Number minDayPressure "Min Pressure [%.1f hPa]" <pressure> (Press)
+Number maxWeekPressure "Max Pressure [%.1f hPa]" <pressure> (Press)
+Number minWeekPressure "Min Pressure [%.1f hPa]" <pressure> (Press)
+Number maxMonthPressure "Max Pressure [%.1f hPa]" <pressure> (Press)
+Number minMonthPressure "Min Pressure [%.1f hPa]" <pressure> (Press)
+Number maxOverallPressure "Max Pressure [%.1f hPa]" <pressure> (Press)
+Number minOverallPressure "Min Pressure [%.1f hPa]" <pressure> (Press)
+
+String lastMaxDayPressure "Max Pressure at: [%s] " <clock>
+String lastMinDayPressure "Min Pressure at: [%s] " <clock>
+String lastMaxWeekPressure "Max Pressure at: [%s] " <clock>
+String lastMinWeekPressure "Min Pressure at: [%s] " <clock>
+String lastMaxMonthPressure "Max Pressure at: [%s] " <clock>
+String lastMinMonthPressure "Min Pressure at: [%s] " <clock>
+String lastMaxOverallPressure "Max Pressure at: [%s] " <clock>
+String lastMinOverallPressure "Min Pressure at: [%s] " <clock>

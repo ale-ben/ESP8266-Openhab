@@ -1,0 +1,119 @@
+sitemap home label="MQTT Home Sensors" {
+	Frame label="Bedroom" {
+		Text item=temperature label="The Temperature is: " {
+			Frame label="Real Time" {
+				Text item=temperature label="The Temperature is: "
+				Text item=lastUpdateTemp
+			}
+			Frame label="Today" {
+				Text item=maxDayTemperature
+				Text item=lastMaxDayTemperature
+				Text item=minDayTemperature
+				Text item=lastMinDayTemperature
+			}
+			Frame label="Settings" {
+				Setpoint item=refreshTemp minValue=5 maxValue=3600 step=5
+			}
+			Frame label="Graph" { 
+				Switch item=chartPeriod label="Period" icon="chart" mappings=[0="1 Hour", 1="4 Hours", 2="8 Hours", 3="12 Hours", 4="1 Day", 5="3 Days", 6="1 Week", 7="2 Weeks", 8="1 Month", 9="2 Months", 10="4 Months", 11="1 Year"]
+				Chart item=temperature period=h refresh=300 visibility=[chartPeriod==0, chartPeriod=="Uninitialized"]
+				Chart item=temperature period=4h refresh=1800 visibility=[chartPeriod==1]
+				Chart item=temperature period=8h refresh=3600 visibility=[chartPeriod==2]
+				Chart item=temperature period=12h refresh=3600 visibility=[chartPeriod==3]
+				Chart item=temperature period=D refresh=3600 visibility=[chartPeriod==4]
+				Chart item=temperature period=3D refresh=3600 visibility=[chartPeriod==5]
+				Chart item=temperature period=W refresh=3600 visibility=[chartPeriod==6]
+				Chart item=temperature period=2W refresh=3600 visibility=[chartPeriod==7]
+				Chart item=temperature period=M refresh=3600 visibility=[chartPeriod==8]
+				Chart item=temperature period=2M refresh=3600 visibility=[chartPeriod==9]
+				Chart item=temperature period=4M refresh=3600 visibility=[chartPeriod==10]
+				Chart item=temperature period=Y refresh=3600 visibility=[chartPeriod==11]
+			}
+		}
+		Text item=lightSensor label="The Light level is: " {
+			Frame label="Real Time" {
+				Text item=lightSensor label="The Light level is: "
+				Text item=lastUpdateLight 
+			}
+			Frame label="Settings" {
+				Setpoint item=refreshLigLev minValue=5 maxValue=3600 step=5
+			}
+			Frame label="Graph" {
+				Switch item=chartPeriod label="Period" icon="chart" mappings=[0="1 Hour", 1="4 Hours", 2="8 Hours", 3="12 Hours", 4="1 Day", 5="3 Days", 6="1 Week", 7="2 Weeks", 8="1 Month", 9="2 Months", 10="4 Months", 11="1 Year"]
+				Chart item=lightSensor period=h refresh=300 visibility=[chartPeriod==0, chartPeriod=="Uninitialized"]
+				Chart item=lightSensor period=4h refresh=1800 visibility=[chartPeriod==1]
+				Chart item=lightSensor period=8h refresh=3600 visibility=[chartPeriod==2]
+				Chart item=lightSensor period=12h refresh=3600 visibility=[chartPeriod==3]
+				Chart item=lightSensor period=D refresh=3600 visibility=[chartPeriod==4]
+				Chart item=lightSensor period=3D refresh=3600 visibility=[chartPeriod==5]
+				Chart item=lightSensor period=W refresh=3600 visibility=[chartPeriod==6]
+				Chart item=lightSensor period=2W refresh=3600 visibility=[chartPeriod==7]
+				Chart item=lightSensor period=M refresh=3600 visibility=[chartPeriod==8]
+				Chart item=lightSensor period=2M refresh=3600 visibility=[chartPeriod==9]
+				Chart item=lightSensor period=4M refresh=3600 visibility=[chartPeriod==10]
+				Chart item=lightSensor period=Y refresh=3600 visibility=[chartPeriod==11]
+			}
+		}
+		Text item=humidity label="The Humidity level is: "{
+			Frame label="Real Time" {
+			Text item=humidity label="The Humidity level is: "
+			Text item=lastUpdateHum
+			}
+			Frame label="Today" {
+				Text item=maxDayHumidity
+				Text item=lastMaxDayHumidity
+				Text item=minDayHumidity
+				Text item=lastMinDayHumidity
+			}
+			Frame label="Settings" {
+				Setpoint item=refreshHum minValue=5 maxValue=3600 step=5
+			}
+			Frame label="Graph" {
+				Switch item=chartPeriod label="Period" icon="chart" mappings=[0="1 Hour", 1="4 Hours", 2="8 Hours", 3="12 Hours", 4="1 Day", 5="3 Days", 6="1 Week", 7="2 Weeks", 8="1 Month", 9="2 Months", 10="4 Months", 11="1 Year"]
+				Chart item=humidity period=h refresh=300 visibility=[chartPeriod==0, chartPeriod=="Uninitialized"]
+				Chart item=humidity period=4h refresh=1800 visibility=[chartPeriod==1]
+				Chart item=humidity period=8h refresh=3600 visibility=[chartPeriod==2]
+				Chart item=humidity period=12h refresh=3600 visibility=[chartPeriod==3]
+				Chart item=humidity period=D refresh=3600 visibility=[chartPeriod==4]
+				Chart item=humidity period=3D refresh=3600 visibility=[chartPeriod==5]
+				Chart item=humidity period=W refresh=3600 visibility=[chartPeriod==6]
+				Chart item=humidity period=2W refresh=3600 visibility=[chartPeriod==7]
+				Chart item=humidity period=M refresh=3600 visibility=[chartPeriod==8]
+				Chart item=humidity period=2M refresh=3600 visibility=[chartPeriod==9]
+				Chart item=humidity period=4M refresh=3600 visibility=[chartPeriod==10]
+				Chart item=humidity period=Y refresh=3600 visibility=[chartPeriod==11]
+			}
+		}
+		Text item=pressure label="The Pressure is: " {
+			Frame label="Real Time" {
+				Text item=pressure label="The Pressure is: "
+				Text item=lastUpdatePress
+			}
+			Frame label="Today" {
+				Text item=maxDayPressure
+				Text item=lastMaxDayPressure
+				Text item=minDayPressure
+				Text item=lastMinDayPressure
+			}
+			Frame label="Settings" {
+				Setpoint item=refreshPress minValue=5 maxValue=3600 step=5
+			}
+			Frame label="Graph" {
+				Switch item=chartPeriod label="Period" icon="chart" mappings=[0="1 Hour", 1="4 Hours", 2="8 Hours", 3="12 Hours", 4="1 Day", 5="3 Days", 6="1 Week", 7="2 Weeks", 8="1 Month", 9="2 Months", 10="4 Months", 11="1 Year"]
+				Chart item=pressure period=h refresh=300 visibility=[chartPeriod==0, chartPeriod=="Uninitialized"]
+				Chart item=pressure period=4h refresh=1800 visibility=[chartPeriod==1]
+				Chart item=pressure period=8h refresh=3600 visibility=[chartPeriod==2]
+				Chart item=pressure period=12h refresh=3600 visibility=[chartPeriod==3]
+				Chart item=pressure period=D refresh=3600 visibility=[chartPeriod==4]
+				Chart item=pressure period=3D refresh=3600 visibility=[chartPeriod==5]
+				Chart item=pressure period=W refresh=3600 visibility=[chartPeriod==6]
+				Chart item=pressure period=2W refresh=3600 visibility=[chartPeriod==7]
+				Chart item=pressure period=M refresh=3600 visibility=[chartPeriod==8]
+				Chart item=pressure period=2M refresh=3600 visibility=[chartPeriod==9]
+				Chart item=pressure period=4M refresh=3600 visibility=[chartPeriod==10]
+				Chart item=pressure period=Y refresh=3600 visibility=[chartPeriod==11]
+			}
+		}
+	}
+}
+

@@ -1,0 +1,21 @@
+Group Ardu
+Group Sensors (Ardu)
+Group Refresh (Ardu)
+
+String tMax "Max temperature: [%s]" <temperature_hot>
+String tMin "Min temperature: [%s]" <temperature_cold>
+
+String arduino "Arduino [%s]" (Ardu) {mqtt="<[mosquitto:test:state:default]"}
+Number temperature "Temperature °C [%.1f °C]" <temperature> (Sensors, Temp)
+Number humidity "Humidity % [%.1f %%]" <humidity> (Sensors, Hum)
+Number pressure "Pressure hPa[%.1f hPa]" <pressure> (Sensors, Press)
+Number lightSensor "Light level % [%.1f %%]" <dimmablelight> (Sensors, LightS)
+DateTime lastUpdateTemp "Temperature last update at: [%1$tA, %1$td.%1$tm.%1$tY - %1$tH:%1$tM:%1$tS] " <clock> (Ardu)
+DateTime lastUpdateLight "Light level last update at: [%1$tA, %1$td.%1$tm.%1$tY - %1$tH:%1$tM:%1$tS] " <clock> (Ardu)
+DateTime lastUpdateHum "Humidity last update at: [%1$tA, %1$td.%1$tm.%1$tY - %1$tH:%1$tM:%1$tS] " <clock> (Ardu)
+DateTime lastUpdatePress "Pressure last update at: [%1$tA, %1$td.%1$tm.%1$tY - %1$tH:%1$tM:%1$tS] " <clock> (Ardu)
+
+Number refreshTemp "Refresh Rate [%.0f Seconds]" <clock> (Ardu, Refresh)
+Number refreshPress "Refresh rate: [%.0f Seconds]" <clock> (Ardu, Refresh)
+Number refreshHum  "Refresh rate: [%.0f Seconds]" <clock> (Ardu, Refresh)
+Number refreshLigLev "Refresh rate: [%.0f Seconds]" <clock> (Ardu, Refresh)
