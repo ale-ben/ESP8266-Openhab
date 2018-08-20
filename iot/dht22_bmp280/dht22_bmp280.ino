@@ -1,7 +1,8 @@
 /* TODO
  * Study Arduino ide debug 
- * When mqtt is not connected first controll wifi connection then mqtt connection
  * ESP connects to the strongest known wifi
+ * Why is log buffer not working in the first round? TO FIX
+ * Create todo file
  */
 
 
@@ -34,10 +35,10 @@ Adafruit_BMP280 bmp; // I2C
 
 
 //WiFi
-#define wifi_ssid "Vodafone - Sant'Artemio 16/C"
-#define wifi_password "Magicoale_1234"
-//#define wifi_ssid "apsa16c"
+//#define wifi_ssid "Vodafone - Sant'Artemio 16/C"
 //#define wifi_password "Magicoale_1234"
+#define wifi_ssid "apsa16c"
+#define wifi_password "magicoale"
 
 
 //MQTT
@@ -73,7 +74,8 @@ float tempBMP;
 float tempDHT;
 float hum;
 float pres;
-String msg;    
+String msg; 
+String logBuff;   
 
 
 //Time variables
@@ -95,6 +97,7 @@ void setup() {
   
     //Variable initialization
     msg = ""; 
+    logBuff = "";
     //refreshRateTemp = 30000;
     //refreshRatePress = 30000;
     //refreshRateHum = 30000;
@@ -110,6 +113,7 @@ void setup() {
     
     if (!bmp.begin()) { 
         Serial.println("Could not find a valid BMP280 sensor, check wiring!");
+        logBuff+="Could not find a valid BMP280 sensor, check wiring!; ";
         digitalWrite(LED_BUILTIN, HIGH); 
         while (1);
     }
@@ -127,34 +131,55 @@ void setup_wifi() {
     Serial.println();
     Serial.print("Connecting to ");
     Serial.println(wifi_ssid);
+    logBuff+=("Connecting to ");
+    logBuff+=(wifi_ssid);
+    logBuff+="; ";
+
     
     WiFi.begin(wifi_ssid, wifi_password);
-
+    
+    int i = 0;
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");
+        i++;
+        if (i==50){
+            WiFi.begin(wifi_ssid, wifi_password);
+            i = 0;
+            Serial.println();
+        }
     }
 
     Serial.println("");
     Serial.println("WiFi OK ");
     Serial.print("=> ESP8266 IP address: ");
     Serial.println(WiFi.localIP());
+    logBuff+="WiFi Ok, Ip Address: ";
+    logBuff+=(WiFi.localIP());
+    logBuff+="; ";
 }
 
 
 //Reconnect to MQTT Broker
 void reconnect() {
-    Serial.println("Reconnecting to mqtt");
-    while (!client.connected()) {
-        Serial.print("Connecting to MQTT broker ...");
-        if (client.connect(mqtt_clientId, mqtt_user, mqtt_password, logTopic, 1, true, mqtt_willMessage)) {
-            Serial.println("OK");
-            client.publish(logTopic, "Connected to MQTT Broker!" , true);
-        } else {
-            Serial.print("KO, error : ");
-            Serial.print(client.state());
-            Serial.println(" Wait 5 secondes before to retry");
-            delay(5000);
+    if(WiFi.status() != WL_CONNECTED){
+        setup_wifi();
+    }
+    if(!client.connected()){
+        Serial.println("Reconnecting to mqtt");
+        logBuff+="Reconnecting to mqtt; ";
+        while (!client.connected()) {
+            Serial.print("Connecting to MQTT broker ...");
+            if (client.connect(mqtt_clientId, mqtt_user, mqtt_password, logTopic, 1, true, mqtt_willMessage)) {
+                Serial.println("OK");
+                client.publish(logTopic, "Connected to MQTT Broker!" , true);
+            } else {
+                Serial.print("KO, error : ");
+                Serial.print(client.state());
+                Serial.println(" Wait 5 secondes before to retry");
+                logBuff+="KO, Error: " + String(client.state()) + "; Wait 5 secondes before to retry; ";
+                delay(5000);
+            }
         }
     }
 }
@@ -162,7 +187,7 @@ void reconnect() {
 
 void loop() {
     
-    if (!client.loop()){ //This should be called regularly to allow the client to process incoming messages and maintain its connection to the server.
+    if ((!client.loop()) || (WiFi.status() != WL_CONNECTED)){ //This should be called regularly to allow the client to process incoming messages and maintain its connection to the server.
         reconnect();
     }
 
@@ -175,11 +200,15 @@ void loop() {
         if(!isnan(tempDHT)){
             tmp = "Temperature:" + String(tempDHT) + ";";
         } else if(tempBMP>-100){
-            client.publish(logTopic, "DHT22 TEMPERATURE SENSOR NOT WORKING" , true);
+            if(client.connected()){
+                client.publish(logTopic, "DHT22 TEMPERATURE SENSOR NOT WORKING" , true);
+            } else logBuff+="DHT22 TEMPERATURE SENSOR NOT WORKING; ";
             tmp = "Temperature:" + String(tempBMP) + ";";
         } else{
             tmp = "Temperature:NULL;";
-            client.publish(logTopic, "DHT22 AND BMP280 TEMPERATURE NOT WORKING" , true);
+            if(client.connected()){
+                client.publish(logTopic, "DHT22 AND BMP280 TEMPERATURE NOT WORKING" , true);
+            } else logBuff+="DHT22 AND BMP280 TEMPERATURE NOT WORKING; ";
         }
         msg+=tmp;
         lastUpdateTemp=currentMillis;
@@ -190,8 +219,11 @@ void loop() {
         if(!isnan(hum)){
             tmp = "Humidity:" + String(hum) + ";";
         } else {
-          tmp = "Humidity:NULL;";
-          client.publish(logTopic, "DHT22 HUMIDITY NOT WORKING" , true);
+            tmp = "Humidity:NULL;";
+            if(client.connected()){
+                client.publish(logTopic, "DHT22 HUMIDITY NOT WORKING" , true);
+            } else logBuff+="DHT22 HUMIDITY NOT WORKING; ";
+            
         }
         msg+=tmp;
         lastUpdateHum = currentMillis;
@@ -203,22 +235,51 @@ void loop() {
             tmp = "Pressure:" + String(pres/100) + ";";
         } else {
             tmp = "Pressure:NULL;";
-            client.publish(logTopic, "BMP280 PRESSURE NOT WORKING" , true);
+            if(client.connected()){
+                client.publish(logTopic, "BMP280 PRESSURE NOT WORKING" , true);   
+            } else logBuff+="BMP280 PRESSURE NOT WORKING; ";
+            
         }
         msg+=tmp;
         lastUpdatePress = currentMillis;
     }
     if (msg!=""){
-        char messg[msg.length()];
-        strcpy(messg, msg.c_str());
-        client.publish(boardTopic, messg , true);
-        Serial.print("Published: ");
-        Serial.println(msg);
-        msg="";
-        Serial.print("Is Connected to the mqtt: ");
-        Serial.println(client.connected());
+        if (client.connected()){
+            char messg[msg.length()];
+            strcpy(messg, msg.c_str());
+            client.publish(boardTopic, messg , true);
+            Serial.print("Published: ");
+            Serial.println(msg);
+            msg="";
+            Serial.print("Is Connected to the mqtt: ");
+            Serial.println(client.connected());
+        } else {
+            Serial.print("Waiting to be able to publish: ");
+            Serial.println(msg);
+            Serial.print("Is Connected to the mqtt: ");
+            Serial.println(client.connected());
+        }
     }
-    delay(500);
+    if (logBuff!=""){
+        if (client.connected()){
+            char logMessg[logBuff.length()];
+            strcpy(logMessg, logBuff.c_str());
+            client.publish(logTopic, "<Log Buffer>", true);
+            client.publish(logTopic, logMessg , true);
+            client.publish(logTopic, "</Log Buffer>" ,true);
+            Serial.println("<Log Buffer>");
+            Serial.println(logBuff);
+            Serial.println("</Log Buffer>");
+            logBuff="";
+            Serial.print("Is Connected to the mqtt: ");
+            Serial.println(client.connected());
+        } else {
+            Serial.print("Waiting to be able to publish: ");
+            Serial.println(logBuff);
+            Serial.print("Is Connected to the mqtt: ");
+            Serial.println(client.connected());
+        }
+    }
     
 }
 
