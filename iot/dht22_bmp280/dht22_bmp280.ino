@@ -1,11 +1,3 @@
-/* TODO
- * Study Arduino ide debug 
- * ESP connects to the strongest known wifi
- * Why is log buffer not working in the first round? TO FIX
- * Create todo file
- */
-
-
 //DHT22
 #include <DHT.h>
 #define DHTPIN 14     // DHT Pin Gpio14 (D5)
